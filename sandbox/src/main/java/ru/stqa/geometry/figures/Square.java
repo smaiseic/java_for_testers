@@ -6,10 +6,6 @@ public record Square(double side) {
         System.out.println(text);
     }
 
-    public static double area(double a) {
-        return a * a;
-    }
-
     public double area() {
         return this.side * this.side;
     }
