@@ -33,8 +33,11 @@ public class Geometry {
 
 
         // Методы
-        Square.printSquareArea(100);
+        Square.printSquareArea(new Square(8.0));
+        Square.printSquareArea(new Square(5.0));
+
         Rectangle.printRectangleArea(3.0, 5.0);
+
     }
 
 }

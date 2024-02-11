@@ -1,27 +1,21 @@
 package ru.stqa.geometry.figures;
 
-public class Square {
+public record Square(double side) {
+//
+//    private double side;
+//
+//    public Square(double side) {
+//        // cвойство объекта = параметр
+//        this.side = side;
+//    }
 
-    private double side;
-
-    public Square(double side) {
-        // cвойство объекта = параметр
-        this.side = side;
-    }
-
-    public static void printSquareArea(double a) {
-        System.out.println("Площадь квадрата со стороной " + a + " = " + area(a));
-        String text = String.format("Площадь квадрата со стороной %f = %f", a , area(a));
+    public static void printSquareArea(Square square) {
+        String text = String.format("Площадь квадрата со стороной %f = %f", square.side , square.area());
         System.out.println(text);
-        System.out.println(String.format("Площадь квадрата со стороной %f = %f", a , area(a)));
     }
 
     public static double area(double a) {
         return a * a;
-    }
-
-    public static double perimeter(double a) {
-        return 4 * a;
     }
 
     // нет слова статик
