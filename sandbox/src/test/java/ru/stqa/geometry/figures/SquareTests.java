@@ -5,12 +5,6 @@ import org.junit.jupiter.api.Test;
 
 public class SquareTests {
 
-//    @Test
-//    void canCalculateArea() {
-//        double result = Square.area(5);
-//        Assertions.assertEquals(25, result);
-//    }
-
     @Test
     void canCalculateArea() {
         var s = new Square(5.0);
@@ -18,7 +12,7 @@ public class SquareTests {
         Assertions.assertEquals(25, result);
     }
 
-    @Test //TDD
+    @Test
     void calculatePerimeter() {
         Assertions.assertEquals(20.0, new Square(5.0).perimeter());
     }
