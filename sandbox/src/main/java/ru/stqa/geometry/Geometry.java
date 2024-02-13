@@ -13,6 +13,8 @@ public class Geometry {
 
         Triangle.printTriangleArea(new Triangle(2.0, 4.0, 5.0));
         Triangle.printTriangleArea(new Triangle(4.0, 2.0, 9.0));
+
+        Triangle.printTrianglePerimeter(new Triangle(4.0, 2.0, 5.0));
     }
 
 }

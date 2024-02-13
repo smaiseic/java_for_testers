@@ -9,4 +9,9 @@ public class TriangleTests {
     void canCalculateTriangleArea() {
         Assertions.assertEquals(9.7979589711327112, new Triangle(4.0, 5.0, 7.0).area());
     }
+
+    @Test
+    void canCalculateTrianglePerimeter() {
+        Assertions.assertEquals(15, new Triangle(4.0, 5.0, 6.0).perimeter());
+    }
 }

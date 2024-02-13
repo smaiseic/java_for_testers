@@ -4,7 +4,7 @@ import static java.lang.Math.sqrt;
 
 public record Triangle(double a, double b, double c) {
 
-    private double perimeter() {
+    public double perimeter() {
         return this.a + this.b + this.c;
     }
 
@@ -16,8 +16,7 @@ public record Triangle(double a, double b, double c) {
     private boolean exists() {
         if((this.a + this.b) > this.c) {
             return true;
-        } else
-            return false;
+        } else return false;
     }
 
     public static void printTriangleArea(Triangle triangle) {
@@ -29,4 +28,7 @@ public record Triangle(double a, double b, double c) {
         }
     }
 
+    public static void printTrianglePerimeter(Triangle triangle) {
+        System.out.println(String.format("Периметр треугольника со сторонами %.1f, %.1f и %.1f = %f", triangle.a, triangle.b, triangle.c, triangle.perimeter()));
+    }
 }
