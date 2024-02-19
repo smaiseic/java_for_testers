@@ -4,6 +4,15 @@ import static java.lang.Math.sqrt;
 
 public record Triangle(double a, double b, double c) {
 
+    public Triangle {
+        if (a < 0 || b < 0 || c < 0) {
+            throw new IllegalArgumentException("Triangle should has only non-negative sides");
+        }
+        if (a + b < c || a + c < b || b + c < a) {
+            throw new IllegalArgumentException("Triangle inequality is violated");
+        }
+    }
+
     public double perimeter() {
         return this.a + this.b + this.c;
     }
@@ -14,7 +23,7 @@ public record Triangle(double a, double b, double c) {
     }
 
     private boolean exists() {
-        if((this.a + this.b) > this.c) {
+        if ((this.a + this.b) > this.c) {
             return true;
         } else return false;
     }
