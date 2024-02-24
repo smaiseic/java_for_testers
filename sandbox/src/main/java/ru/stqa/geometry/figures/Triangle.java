@@ -1,5 +1,7 @@
 package ru.stqa.geometry.figures;
 
+import java.util.Objects;
+
 import static java.lang.Math.sqrt;
 
 public record Triangle(double a, double b, double c) {
@@ -39,5 +41,33 @@ public record Triangle(double a, double b, double c) {
 
     public static void printTrianglePerimeter(Triangle triangle) {
         System.out.println(String.format("Периметр треугольника со сторонами %.1f, %.1f и %.1f = %f", triangle.a, triangle.b, triangle.c, triangle.perimeter()));
+    }
+
+
+    /*
+        Available combinations:
+        ('a', 'b', 'c')
+        ('a', 'c', 'b')
+        ('b', 'a', 'c')
+        ('b', 'c', 'a')
+        ('c', 'a', 'b')
+        ('c', 'b', 'a')
+    */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        return (Double.compare(triangle.a, a) == 0 && Double.compare(triangle.b, b) == 0 && Double.compare(triangle.c, c) == 0)
+                || (Double.compare(triangle.a, a) == 0 && Double.compare(triangle.b, c) == 0 && Double.compare(triangle.c, b) == 0)
+                || (Double.compare(triangle.a, b) == 0 && Double.compare(triangle.b, a) == 0 && Double.compare(triangle.c, c) == 0)
+                || (Double.compare(triangle.a, c) == 0 && Double.compare(triangle.b, b) == 0 && Double.compare(triangle.c, a) == 0)
+                || (Double.compare(triangle.a, b) == 0 && Double.compare(triangle.b, c) == 0 && Double.compare(triangle.c, a) == 0)
+                || (Double.compare(triangle.a, c) == 0 && Double.compare(triangle.b, a) == 0 && Double.compare(triangle.c, b) == 0);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1;
     }
 }
