@@ -2,13 +2,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class GroupCreationTests {
-    private static WebDriver driver; //static в данном случае не дает переменной стать связанной с конкретным объектом и делает ее глобальной
+    private static WebDriver driver;
 
-    // @BeforeAll //метод, помеченный данной аннотацией будет выполнятся перед всеми тестами в классе
     @BeforeEach
     public void setUp() {
         if (driver == null) {
@@ -22,17 +22,20 @@ public class GroupCreationTests {
         }
     }
 
-//    // @AfterAll //метод, помеченный данной аннотацией будет выполнятся после всех тестов в классе
-//    @AfterEach
-//    public void tearDown() {
-//        driver.findElement(By.linkText("Logout")).click();
-//        driver.quit();
-//    }
+    private boolean isElementPresent(By locator) {
+        try {
+            driver.findElement(locator);
+            return true;
+        } catch (NoSuchElementException e) {
+            return false;
+        }
+    }
 
     @Test
     public void canCreateGroup() {
-
-        driver.findElement(By.linkText("groups")).click();
+        if (! isElementPresent(By.name("new"))) {
+            driver.findElement(By.linkText("groups")).click();
+        }
         driver.findElement(By.name("new")).click();
         driver.findElement(By.name("group_name")).click();
         driver.findElement(By.name("group_name")).sendKeys("group name1");
@@ -46,6 +49,9 @@ public class GroupCreationTests {
 
     @Test
     public void canCreateGroupWithEmptyName() {
+        if (! isElementPresent(By.name("new"))) {
+            driver.findElement(By.linkText("groups")).click();
+        }
         driver.findElement(By.linkText("groups")).click();
         driver.findElement(By.name("new")).click();
         driver.findElement(By.name("group_name")).click();
