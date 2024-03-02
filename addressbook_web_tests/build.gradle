@@ -17,4 +17,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    if (project.hasProperty("browser")) {
+        // Пробрасываем project.property "browser" из конфигурации запуска -Pbrowser в systemProperty.
+        systemProperty("browser", project.property("browser"))
+    }
 }
