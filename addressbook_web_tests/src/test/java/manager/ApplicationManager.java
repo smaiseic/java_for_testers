@@ -14,6 +14,8 @@ public class ApplicationManager {
 
     private GroupHelper groups;
 
+    private ContactHelper contacts;
+
     public void init(String browser) {
         if (driver == null) {
             if ("firefox".equals(browser)) {
@@ -43,6 +45,13 @@ public class ApplicationManager {
             groups = new GroupHelper(this);
         }
         return groups;
+    }
+
+    public ContactHelper contacts() {
+        if (contacts == null) {
+            contacts = new ContactHelper(this);
+        }
+        return contacts;
     }
 
     protected boolean isElementPresent(By locator) {
