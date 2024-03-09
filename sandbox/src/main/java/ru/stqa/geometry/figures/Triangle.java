@@ -1,7 +1,5 @@
 package ru.stqa.geometry.figures;
 
-import java.util.Objects;
-
 import static java.lang.Math.sqrt;
 
 public record Triangle(double a, double b, double c) {
@@ -28,6 +26,7 @@ public record Triangle(double a, double b, double c) {
         if ((this.a + this.b) > this.c) {
             return true;
         } else return false;
+        //return ((this.a + this.b) > this.c);
     }
 
     public static void printTriangleArea(Triangle triangle) {
