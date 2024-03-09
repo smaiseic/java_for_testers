@@ -19,5 +19,4 @@ public class ContactCreationTests extends TestBase {
     public void canCreateContactWithLastNameOnly() {
         app.contacts().createContact(new ContactData().withLastName("last_name"));
     }
-
 }

@@ -6,9 +6,14 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class ApplicationManager {
     protected WebDriver driver;
+
+    protected WebDriverWait wait;
 
     private LoginHelper session;
 
@@ -25,8 +30,8 @@ public class ApplicationManager {
             } else {
                 throw new IllegalArgumentException(String.format("Unknown browser", browser));
             }
-
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
+            wait = new WebDriverWait(driver, Duration.ofSeconds(30));
             driver.get("http://localhost/addressbook/index.php");
             driver.manage().window().setSize(new Dimension(1052, 1012));
             session().login("admin", "secret");
@@ -62,5 +67,4 @@ public class ApplicationManager {
             return false;
         }
     }
-
 }

@@ -10,9 +10,10 @@ public class ContactHelper extends HelperBase {
     }
 
     public void createContact(ContactData contact) {
-        openContactPage();
+        openAddContactPage();
         fillContactForm(contact);
         submitContactCreation();
+        openHomePage();
     }
 
     private void submitContactCreation() {
@@ -26,9 +27,27 @@ public class ContactHelper extends HelperBase {
 
     }
 
-    private void openContactPage() {
+    private void openAddContactPage() {
         if (!manager.isElementPresent(By.xpath("//input[@value='Enter']"))) {
             click(By.linkText("add new"));
         }
+    }
+
+    public boolean isContactPresent() {
+        return manager.isElementPresent(By.name("selected[]"));
+    }
+
+    public void removeContact() {
+        openHomePage();
+        selectContact();
+        removeSelectedContact();
+    }
+
+    private void selectContact() {
+        click(By.name("selected[]"));
+    }
+
+    private void removeSelectedContact() {
+        click(By.xpath("//input[@value='Delete']"));
     }
 }

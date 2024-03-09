@@ -10,12 +10,17 @@ public class HelperBase {
     }
 
     protected void click(By locator) {
-        manager.driver.findElement(locator).click();
+        manager.wait.until(d -> d.findElement(locator)).click();
+        //manager.driver.findElement(locator).click();
     }
 
     protected void type(By locator, String text) {
         click(locator);
         manager.driver.findElement(locator).clear();
         manager.driver.findElement(locator).sendKeys(text);
+    }
+
+    protected void openHomePage() {
+        click(By.linkText("home"));
     }
 }
