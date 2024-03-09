@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 public class GroupHelper extends HelperBase {
 
     public GroupHelper(ApplicationManager manager) {
-        //вызывается конструктора базового класса и значение параметра manager передается в базовый класс
+        //вызывается конструктор базового класса и значение параметра manager передается в базовый класс
         //в его конструктор и там сохраняется, но поскольку класс GroupHepler расширяет базовый класс, то переменна manager,
         //которая находится в базовом классе будет доступна
         super(manager);
@@ -50,21 +50,13 @@ public class GroupHelper extends HelperBase {
         }
     }
 
-    public boolean isGroupPresent() {
-        openGroupPage();
-        return manager.isElementPresent(By.name("selected[]"));
-    }
-
-
     private void submitGroupCreation() {
         click(By.name("submit"));
     }
 
-
     private void initGroupCreation() {
         click(By.name("new"));
     }
-
 
     private void removeSelectedGroup() {
         click(By.name("delete"));
@@ -88,4 +80,8 @@ public class GroupHelper extends HelperBase {
         click(By.name("selected[]"));
     }
 
+    public int getCount() {
+        openGroupPage();
+        return manager.driver.findElements(By.name("selected[]")).size(); //list
+    }
 }
