@@ -13,7 +13,7 @@ public class ContactHelper extends HelperBase {
         openAddContactPage();
         fillContactForm(contact);
         submitContactCreation();
-        openHomePage();
+        //openHomePage();
     }
 
     private void submitContactCreation() {
@@ -33,10 +33,6 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-    public boolean isContactPresent() {
-        return manager.isElementPresent(By.name("selected[]"));
-    }
-
     public void removeContact() {
         openHomePage();
         selectContact();
@@ -49,5 +45,10 @@ public class ContactHelper extends HelperBase {
 
     private void removeSelectedContact() {
         click(By.xpath("//input[@value='Delete']"));
+    }
+
+    public int getCount() {
+        openHomePage();
+        return manager.driver.findElements(By.name("selected[]")).size();
     }
 }

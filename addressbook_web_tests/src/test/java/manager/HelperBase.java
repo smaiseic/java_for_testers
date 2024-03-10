@@ -22,5 +22,6 @@ public class HelperBase {
 
     protected void openHomePage() {
         click(By.linkText("home"));
+        manager.wait.until(d -> d.findElement(By.xpath("//strong[text()='Number of results: ']")));
     }
 }
