@@ -18,16 +18,18 @@ public class ContactModificationTests extends TestBase {
         }
         var oldContacts = app.contacts().getList();
         var index = new Random().nextInt(oldContacts.size());
-        var testData = new ContactData().withFirstName("new_" + randomString(5)).withLastName("new_" + randomString(5));
-        app.contacts().modifyContact(oldContacts.get(index), testData);
+        var testData = new ContactData()
+                .withId(oldContacts.get(index).id())
+                .withFirstName("new_" + randomString(5))
+                .withLastName("new_" + randomString(5));
+        app.contacts().modifyContact(testData);
         var newContacts = app.contacts().getList();
-
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newContacts.sort(compareById);
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.set(index, testData.withId(oldContacts.get(index).id()));
+        expectedList.set(index, testData);
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
