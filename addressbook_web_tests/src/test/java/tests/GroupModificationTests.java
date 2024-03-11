@@ -29,6 +29,5 @@ public class GroupModificationTests extends TestBase {
         };
         newGroups.sort(compareById);
         expectedList.sort(compareById);
-
     }
 }

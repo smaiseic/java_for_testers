@@ -66,4 +66,20 @@ public class ContactHelper extends HelperBase {
         }
         return contacts;
     }
+
+    public void modifyContact(ContactData contact, ContactData newContact) {
+        openHomePage();
+        initContactEdit(contact);
+        fillContactForm(newContact);
+        submitContactModification();
+    }
+
+    private void submitContactModification() {
+        manager.driver.findElement(By.name("update")).click();
+    }
+
+    private void initContactEdit(ContactData contact) {
+        manager.driver.findElement(
+                By.xpath(String.format("//input[@id='%s']/../following-sibling::td//img[@title='Edit']", contact.id()))).click();
+    }
 }
