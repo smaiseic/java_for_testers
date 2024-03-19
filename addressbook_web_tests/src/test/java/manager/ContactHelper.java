@@ -23,10 +23,10 @@ public class ContactHelper extends HelperBase {
     }
 
     private void fillContactForm(ContactData contact) {
-        type(By.name("firstname"), contact.first_name());
-        type(By.name("middlename"), contact.middle_name());
-        type(By.name("lastname"), contact.last_name());
-
+        type(By.name("firstname"), contact.firstname());
+        type(By.name("middlename"), contact.middlename());
+        type(By.name("lastname"), contact.lastname());
+        attach(By.name("photo"), contact.photo());
     }
 
     private void openAddContactPage() {
