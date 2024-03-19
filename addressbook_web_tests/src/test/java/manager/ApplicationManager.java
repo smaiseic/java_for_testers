@@ -9,6 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.Properties;
 
 public class ApplicationManager {
     protected WebDriver driver;
@@ -21,7 +22,10 @@ public class ApplicationManager {
 
     private ContactHelper contacts;
 
-    public void init(String browser) {
+    private Properties properties;
+
+    public void init(String browser, Properties properties) {
+        this.properties = properties;
         if (driver == null) {
             if ("firefox".equals(browser)) {
                 driver = new FirefoxDriver();
@@ -32,9 +36,9 @@ public class ApplicationManager {
             }
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-            driver.get("http://localhost/addressbook/index.php");
+            driver.get(properties.getProperty("web.baseUrl"));
             driver.manage().window().setSize(new Dimension(1052, 1012));
-            session().login("admin", "secret");
+            session().login(properties.getProperty("web.username"), properties.getProperty("web.password"));
         }
     }
 

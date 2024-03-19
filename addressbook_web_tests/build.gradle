@@ -26,4 +26,7 @@ test {
         // Пробрасываем project.property "browser" из конфигурации запуска -Pbrowser в systemProperty.
         systemProperty("browser", project.property("browser"))
     }
+    if (project.hasProperty("target")) {
+        systemProperty("target", project.property("target"))
+    }
 }
