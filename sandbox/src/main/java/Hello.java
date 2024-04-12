@@ -25,5 +25,6 @@ public class Hello {
         System.out.println(new File("sandbox/build.gradle").getAbsoluteFile());
         System.out.println(new File("sandbox/build.gradle").getCanonicalPath());
         System.out.println(new File("").getAbsoluteFile());
+        System.out.println(new File("sandbox/build.gradle").toURI());
     }
 }
