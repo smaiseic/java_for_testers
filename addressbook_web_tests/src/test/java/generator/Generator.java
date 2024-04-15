@@ -13,8 +13,9 @@ import model.GroupData;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Generator {
 
@@ -108,27 +109,23 @@ public class Generator {
         }
     }
 
-    private Object generateContacts() {
-        var result = new ArrayList<ContactData>();
-        for (var firstName : List.of("", "firstname", CommonFunctions.randomString(10))) {
-            for (var lastName : List.of("", "lastname", CommonFunctions.randomString(10))) {
-                result.add(new ContactData()
-                        .withFirstName(firstName)
-                        .withLastName(lastName));
-            }
-        }
-        return result;
+
+
+    private Object generateData(Supplier<Object> dataSupplier) {
+        return Stream.generate(dataSupplier).limit(count).collect(Collectors.toList());
     }
 
     private Object generateGroups() {
-        var result = new ArrayList<GroupData>();
+        return generateData(() -> new GroupData()
+                .withName(CommonFunctions.randomString(10))
+                .withHeader(CommonFunctions.randomString(10))
+                .withFooter(CommonFunctions.randomString(10)));
+    }
 
-        for (int i = 0; i < 5; i++) {
-            result.add(new GroupData()
-                    .withName(CommonFunctions.randomString(i * 10))
-                    .withHeader(CommonFunctions.randomString(i * 10))
-                    .withFooter(CommonFunctions.randomString(i * 10)));
-        }
-        return result;
+    private Object generateContacts() {
+        return generateData(() -> new ContactData()
+                .withFirstName(CommonFunctions.randomString(10))
+                .withLastName(CommonFunctions.randomString(10))
+                .withAddress(CommonFunctions.randomString(10)));
     }
 }

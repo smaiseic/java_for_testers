@@ -20,7 +20,7 @@ public class ContactHelper extends HelperBase {
         submitContactCreation();
     }
 
-    public void createContact(ContactData contact, GroupData group) {
+    public void createContactInGroup(ContactData contact, GroupData group) {
         openAddContactPage();
         fillContactForm(contact);
         selectGroup(group);
@@ -30,6 +30,11 @@ public class ContactHelper extends HelperBase {
 
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+        //new Select(manager.driver.findElement(By.name("new_group"))).selectByVisibleText(group.name());
+    }
+
+    private void sortByGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByVisibleText(group.name());
     }
 
     private void submitContactCreation() {
@@ -40,6 +45,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contact.firstname());
         type(By.name("middlename"), contact.middlename());
         type(By.name("lastname"), contact.lastname());
+        type(By.name("address"), contact.address());
         if (!contact.photo().equals("")) {
             attach(By.name("photo"), contact.photo());
         }
@@ -55,6 +61,16 @@ public class ContactHelper extends HelperBase {
         openHomePage();
         selectContact(contact);
         removeSelectedContact();
+    }
+
+    public void removeAllContacts() {
+        openHomePage();
+        selectAllContacts();
+        removeSelectedContact();
+    }
+
+    private void selectAllContacts() {
+        click(By.xpath("//input[@id='MassCB']"));
     }
 
     private void selectContact(ContactData contact) {
@@ -97,5 +113,17 @@ public class ContactHelper extends HelperBase {
     private void initContactEdit(ContactData contact) {
         manager.driver.findElement(
                 By.xpath(String.format("//input[@id='%s']/../following-sibling::td//img[@title='Edit']", contact.id()))).click();
+    }
+
+    private void submitRemoveContactFromGroup() {
+        manager.driver.findElement(By.name("remove")).click();
+    }
+
+    public void removeContactFromGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        sortByGroup(group);
+        selectContact(contact);
+        submitRemoveContactFromGroup();
+        openHomePage();
     }
 }

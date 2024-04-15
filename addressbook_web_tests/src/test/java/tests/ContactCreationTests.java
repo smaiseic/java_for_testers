@@ -29,28 +29,31 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateContact(ContactData contact) {
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.hbm().getContactList();
         app.contacts().createContact(contact);
-        var newContacts = app.contacts().getList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
         newContacts.sort(compareById);
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()).withLastName(contact.lastname()).withFirstName(contact.firstname()));
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id())
+                .withLastName(contact.lastname())
+                .withAddress(contact.address())
+                .withFirstName(contact.firstname()));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
 
     @Test
     public void canCreateContactWithPhoto() {
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.hbm().getContactList();
         ContactData contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images"));
         app.contacts().createContact(contact);
-        var newContacts = app.contacts().getList();
+        var newContacts = app.hbm().getContactList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
@@ -67,21 +70,18 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void canCreateContactInGroup() {
-        var oldContacts = app.contacts().getList();
         ContactData contact = new ContactData()
                 .withFirstName(CommonFunctions.randomString(10))
                 .withLastName(CommonFunctions.randomString(10))
+                .withAddress(CommonFunctions.randomString(10))
                 .withPhoto(randomFile("src/test/resources/images"));
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
         }
         var group = app.hbm().getGroupList().get(0);
-
         var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().createContact(contact, group);
+        app.contacts().createContactInGroup(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
-
     }
-
 }
