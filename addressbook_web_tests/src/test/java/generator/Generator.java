@@ -13,6 +13,7 @@ import model.GroupData;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -109,6 +110,13 @@ public class Generator {
         }
     }
 
+    private Object generateDataOld(Supplier<Object> dataSupplier) {
+        var result = new ArrayList<Object>();
+        for (int i = 0; i < count; i++) {
+            result.add(dataSupplier.get()); // метод гет возвращает объект
+        }
+        return result;
+    }
 
 
     private Object generateData(Supplier<Object> dataSupplier) {
