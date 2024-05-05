@@ -18,6 +18,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
@@ -73,7 +74,7 @@ public class GroupCreationTests extends TestBase {
         return result;
     }
 
-    public static Stream<GroupData> singleRandomGroup() {
+    public static Stream<GroupData> randomGroups() {
         Supplier<GroupData> randomGroup = () -> new GroupData()
                 .withName(CommonFunctions.randomString(10))
                 .withHeader(CommonFunctions.randomString(10))
@@ -101,7 +102,7 @@ public class GroupCreationTests extends TestBase {
     }
 
     @ParameterizedTest
-    @MethodSource("singleRandomGroup")
+    @MethodSource("randomGroups")
     public void canCreateGroupJDBC(GroupData group) {
         var oldGroups = app.jdbc().getGroupList();
         app.groups().createGroup(group);
@@ -118,8 +119,21 @@ public class GroupCreationTests extends TestBase {
     }
 
     @ParameterizedTest
-    @MethodSource("singleRandomGroup")
+    @MethodSource("randomGroups")
     public void canCreateGroup(GroupData group) {
+        var oldGroups = app.hbm().getGroupList();
+        app.groups().createGroup(group);
+        var newGroups = app.hbm().getGroupList();
+        var extraGroups = newGroups.stream().filter(g -> !oldGroups.contains(g)).toList();
+        var newId = extraGroups.get(0).id();
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(newId));
+        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
+    }
+
+    @ParameterizedTest
+    @MethodSource("randomGroups")
+    public void canCreateGroupOld(GroupData group) {
         var oldGroups = app.hbm().getGroupList();
         app.groups().createGroup(group);
         var newGroups = app.hbm().getGroupList();

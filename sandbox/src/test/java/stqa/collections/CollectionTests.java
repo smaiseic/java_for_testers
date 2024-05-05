@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CollectionTests {
 
@@ -45,5 +47,20 @@ public class CollectionTests {
         var listImmutable = List.of("a", "b", "c"); // << immutable
         var list2 = new ArrayList<>(listImmutable);
         Assertions.assertEquals(3, list2.size());
+    }
+
+    @Test
+    void setTests() {
+        var set1 = Set.copyOf(List.of("a", "b", "c", "a"));
+        Assertions.assertEquals(3, set1.size());
+
+        set1.toArray(); // ?? потом получить элемент
+        set1.iterator().next(); //вернет какой-то элемент множества
+        set1.stream().findAny().get(); // предпочтительный вариант
+
+        var set2 = new HashSet<>(List.of("a", "b", "c", "a"));
+        set2.add("d");
+        Assertions.assertEquals(4, set2.size());
+
     }
 }
